@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:contede.phifo.csvtracker.CsvTrackerActivitytivityvity"
+    tools:showIn="@layout/app_bar_main"
+-->
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lin_lay"
+    android:paddingTop="62dp"
+    android:paddingLeft="16dp"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
+
+    <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="de.phifo.csvtracker.CsvTrackerActivity">
+
+    </android.support.v4.view.ViewPager>
+<!--
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        />
+
+    <Switch
+        android:id="@+id/valueSTO"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textOff="Soll"
+        android:textOn="Haben"
+        />
+    -->
+
+</android.widget.LinearLayout>

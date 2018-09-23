@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">CSVTracker</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string-array name="kto_array">
+        <item>TEST KONTO</item>
+        <item>Voba Konto</item>
+        <item>Voba Kredit</item>
+        <item>Voba Sparbuch</item>
+        <item>DKB Kredit</item>
+        <item>DKB Konto</item>
+        <item>Bargeld EUR</item>
+    </string-array>
+
+    <string-array name="skto_array">
+        <item>Soll</item>
+        <item>Haben</item>
+    </string-array>
+
+    <string-array name="kat_array">
+        <item>Verpflegung</item>
+        <item>Güter</item>
+        <item>Freizeit</item>
+        <item>Wohnen</item>
+        <item>Einkommen</item>
+        <item>Kasse</item>
+    </string-array>
+
+    <string-array name="cur_array">
+        <item>EUR</item>
+        <item>INR</item>
+        <item>VND</item>
+        <item>USD</item>
+        <item>SGD</item>
+    </string-array>
+
+    <string-array name="sub_array">
+        <item>Kantine</item>
+        <item>Supermarkt</item>
+        <item>Bäcker</item>
+        <item>Vorschuß</item>
+        <item>Rückzahlung</item>
+        <item>Hygiene</item>
+        <item>Abheben</item>
+        <item>Snack</item>
+        <item>Transport</item>
+        <item>Alkohol</item>
+    </string-array>
+</resources>
