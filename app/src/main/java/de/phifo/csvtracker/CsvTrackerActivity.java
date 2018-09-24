@@ -1,14 +1,9 @@
 package de.phifo.csvtracker;
 
-import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-
-import android.util.AttributeSet;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,23 +18,18 @@ import java.util.Map;
 
 import de.phifo.csvtracker.fragments.WidgetFragment;
 import de.phifo.csvtracker.persistance.CsvTrackerDatabase;
-
 import de.phifo.persistance.TableContract;
 
 public class CsvTrackerActivity extends AppCompatActivity {
 
-    private Map<String, TabsPagerAdapter> map = new HashMap<>();
-
-    private CsvTrackerDatabase database;
-
-    // http://saulmm.github.io/mastering-coordinator
-
     DrawerLayout drawerLayout;
     NavigationView nav;
 
+    // http://saulmm.github.io/mastering-coordinator
     NavigationControl navi;
-
     CsvTrackerMain main;
+    private Map<String, TabsPagerAdapter> map = new HashMap<>();
+    private CsvTrackerDatabase database;
 
     @Override
     protected void onStart() {
@@ -70,9 +60,9 @@ public class CsvTrackerActivity extends AppCompatActivity {
         // setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open,
-                 R.string.navigation_drawer_close);
+                R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -93,23 +83,23 @@ public class CsvTrackerActivity extends AppCompatActivity {
 
         tabs.setupWithViewPager(pager);
 
-        if(drawerLayout!=null){
+        if (drawerLayout != null) {
             drawerLayout.closeDrawers();
         }
     }
 
-    public TabsPagerAdapter GetTabsAdapter(TableContract c){
+    public TabsPagerAdapter GetTabsAdapter(TableContract c) {
 
-        if(!map.containsKey(c.getTableName())){
+        if (!map.containsKey(c.getTableName())) {
 
             map.put(c.getTableName(), CreateTabsAdapter(c));
 
         }
 
-            return map.get((c.getTableName()));
+        return map.get((c.getTableName()));
     }
 
-    public TabsPagerAdapter CreateTabsAdapter(TableContract c){
+    public TabsPagerAdapter CreateTabsAdapter(TableContract c) {
         TabsPagerAdapter tabsAdaptert;
 
         tabsAdaptert = new TabsPagerAdapter(getSupportFragmentManager(), database, c, main);
@@ -133,9 +123,9 @@ public class CsvTrackerActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = drawerLayout;//(DrawerLayout) findViewById(R.id.drawer_layout);
-        if(drawer!=null){
+        if (drawer != null) {
 
-        drawer.closeDrawers();
+            drawer.closeDrawers();
         }
 
         /*
@@ -170,14 +160,11 @@ public class CsvTrackerActivity extends AppCompatActivity {
     }
 
     public void toast(String message) {
-        // Toast t = new Toast(this);
         Toast t = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-        // t.setText(message);
-
         t.show();
     }
 
-    public void handleException(Exception e)   {
+    public void handleException(Exception e) {
         toast(e.toString());
 
         e.printStackTrace();

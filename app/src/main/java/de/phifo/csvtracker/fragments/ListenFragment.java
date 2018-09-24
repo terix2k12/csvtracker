@@ -76,6 +76,29 @@ public class ListenFragment extends ListFragment {
 
         Button txt = new Button(getActivity());
         txt.setText("Sync");
+        txt.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (selectedObject != null) {
+                            String s = selectedObject.toString();
+
+                            String[] ry = s.split(";");
+                            List<Object> l = new ArrayList);
+                            for(int i=0; i<ry.length;i++){
+                                l.add(ry[i]);
+                            }
+
+                            main.AddToServer(tableContract, l);
+
+                        }else{
+
+                            Toast.makeText(getActivity(),
+                                    "nothing selected to sync", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
 
         Button txt2 = new Button(getActivity());
         txt2.setText("Delete");
