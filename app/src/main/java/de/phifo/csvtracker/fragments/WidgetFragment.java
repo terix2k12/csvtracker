@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -17,7 +16,6 @@ import java.util.Map;
 import de.phifo.csvtracker.CsvTrackerMain;
 import de.phifo.csvtracker.widget.DateWidget;
 import de.phifo.csvtracker.widget.IWidget;
-
 import de.phifo.csvtracker.widget.SelectionWidget;
 import de.phifo.csvtracker.widget.TextWidget;
 import de.phifo.persistance.ColumnContract;
@@ -31,12 +29,12 @@ public class WidgetFragment extends Fragment {
 
     public CsvTrackerMain main;
 
-    public WidgetFragment(){
+    public WidgetFragment() {
     }
 
-    public void clear(){
-//        be2.getText().clear();
- //       cmt.getText().clear();
+    public void clear() {
+        // be2.getText().clear();
+        // cmt.getText().clear();
     }
 
     @Override
@@ -50,9 +48,8 @@ public class WidgetFragment extends Fragment {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
 
-        for(ColumnContract col : contract.getColumns())
-        {
-            switch(col.getType()){
+        for (ColumnContract col : contract.getColumns()) {
+            switch (col.getType()) {
                 case DATE:
                     createDate(col, ll);
 
@@ -79,32 +76,32 @@ public class WidgetFragment extends Fragment {
         txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            List<Object> werte = new ArrayList<>();
-            for(ColumnContract col : contract.getColumns()) {
-                IWidget wid =   inputs.get(col.getColumnName());
-                if(wid!=null){
-                    werte.add( wid.getWerte() );
+                List<Object> werte = new ArrayList<>();
+                for (ColumnContract col : contract.getColumns()) {
+                    IWidget widget = inputs.get(col.getColumnName());
+                    if (widget != null) {
+                        werte.add(widget.getWerte());
+                    }
                 }
-            }
 
-            clear();
-            main.AddItem(contract, werte );
-        }});
+                clear();
+                main.AddItem(contract, werte);
+            }
+        });
 
         ll.addView(txt);
 
-       return ll;
+        return ll;
     }
 
-    private void createDate(ColumnContract col, LinearLayout ll){
+    private void createDate(ColumnContract col, LinearLayout ll) {
         DateWidget dt = new DateWidget(getActivity(), col, ll);
         inputs.put(col.getColumnName(), dt);
     }
 
-    private void createText(ColumnContract col, LinearLayout ll){
+    private void createText(ColumnContract col, LinearLayout ll) {
         TextWidget be = new TextWidget(getActivity(), col, ll);
         inputs.put(col.getColumnName(), be);
     }
-
 
 }

@@ -27,7 +27,6 @@ public class CsvTrackerMain {
         TableContract contract = getMetaTable();
         AddTable(contract, null, null);
 
-
         AndroidDAO dao = new AndroidDAO(database);
 
         TableContract defaultC = Default();
@@ -67,6 +66,7 @@ public class CsvTrackerMain {
 
     private TableContract Default() {
         return new TableContract("AUSGABEN",
+                // TODO id column determined by database
                 new ColumnContract("Datum", ColumnType.DATE, 0),
                 new ColumnContract("Konto", ColumnType.SELECTION, R.array.kto_array),
                 new ColumnContract("Skonto", ColumnType.SELECTION, R.array.skto_array),

@@ -26,21 +26,21 @@ public class DateWidget implements IWidget {
             LinearLayout.LayoutParams.WRAP_CONTENT);
 
     public DateWidget(final FragmentActivity activity,
-                      ColumnContract col, LinearLayout ll){
-        this. activity=activity;
+                      ColumnContract col, LinearLayout ll) {
+        this.activity = activity;
 
         p44.weight = 0.75f;
         p66.weight = 0.25f;
 
-        LinearLayout ll1 = new LinearLayout(activity );
+        LinearLayout ll1 = new LinearLayout(activity);
         ll1.setOrientation(LinearLayout.HORIZONTAL);
         ll1.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
-        TextView d1 = addText(col.getColumnName()+":",
+        TextView d1 = addText(col.getColumnName() + ":",
                 android.R.style.TextAppearance_Material_Small);
-        txt = new DateText(activity );
-        txt.setTextAppearance(activity , android.R.style.TextAppearance_Material_Medium);
+        txt = new DateText(activity);
+        txt.setTextAppearance(activity, android.R.style.TextAppearance_Material_Medium);
         txt.setLayoutParams(p66);
         d1.setLayoutParams(p44);
         txt.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +67,10 @@ public class DateWidget implements IWidget {
         NumberFormat f2 = new DecimalFormat("00");
         NumberFormat f4 = new DecimalFormat("0000");
 
-        String dd = f2.format( txt.getDay() );
-        String mm = f2.format( txt.getMonth() );
-        String yyyy = f4.format( txt.getYear() );
+        String dd = f2.format(txt.getDay());
+        String mm = f2.format(txt.getMonth());
+        String yyyy = f4.format(txt.getYear());
 
-        return txt.getText().toString();
+        return yyyy+"-"+mm+"-"+dd;
     }
 }

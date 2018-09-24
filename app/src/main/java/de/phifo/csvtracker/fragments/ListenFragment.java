@@ -24,7 +24,7 @@ public class ListenFragment extends ListFragment {
     public CsvTrackerDatabase database;
     public TableContract tableContract;
 
-    public ArrayAdapter<Object> adapter;
+    private ArrayAdapter<Object> adapter;
     public CsvTrackerMain main;
 
     ArrayList<Object> values;
@@ -83,16 +83,17 @@ public class ListenFragment extends ListFragment {
                         if (selectedObject != null) {
                             String s = selectedObject.toString();
 
-                            String[] ry = s.split(";");
-                            List<Object> l = new ArrayList);
+                            String[] ry = s
+                                    .replace("[","")
+                                    .replace("]","")
+                                    .split(",");
+                            List<Object> l = new ArrayList();
                             for(int i=0; i<ry.length;i++){
                                 l.add(ry[i]);
                             }
 
                             main.AddToServer(tableContract, l);
-
                         }else{
-
                             Toast.makeText(getActivity(),
                                     "nothing selected to sync", Toast.LENGTH_SHORT).show();
                         }
@@ -111,7 +112,6 @@ public class ListenFragment extends ListFragment {
                             dao.remove(selectedObject);
                             adapter.remove(selectedObject);
                         }else{
-
                         Toast.makeText(getActivity(),
                                 "nothing selected", Toast.LENGTH_SHORT).show();
                         }

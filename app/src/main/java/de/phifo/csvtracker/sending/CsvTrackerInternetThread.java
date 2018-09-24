@@ -20,9 +20,10 @@ public class CsvTrackerInternetThread extends AndroidInternetThread {
         data += "&action=put";
 
         // TODO generic
-        data += "&mm="+s.get(0);
-        data += "&dd="+s.get(0);
-        data += "&yy="+s.get(0);
+        String yyyy_mm_dd = s.get(0).toString();
+        data += "&yy="+ yyyy_mm_dd.substring(2,4);
+        data += "&mm="+ yyyy_mm_dd.substring(5,7);
+        data += "&dd="+ yyyy_mm_dd.substring(8,10);
         data += "&kto="+s.get(1);
         data += "&sko="+s.get(2);
         data += "&cur="+s.get(3);
