@@ -15,43 +15,44 @@ public class AndroidDAO {
 
     private AndroidDatabase dbHelper;
 
-    public AndroidDAO(AndroidDatabase database)
-    {
+    public AndroidDAO(AndroidDatabase database) {
         dbHelper = database;
     }
 
-    public void DeleteAll(TableContract tableContract)
-    {
+    public void DeleteAll(TableContract tableContract) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM "+ tableContract.getTableName()+";");
+        db.execSQL("DELETE FROM " + tableContract.getTableName() + ";");
         dbHelper.close();
     }
 
-    public void Write(TableContract tableContract, List<Object> urls){
+    public void remove(Object obj) {
+
+    }
+
+    public void Write(TableContract tableContract, List<Object> urls) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
 
         int i = 0;
-        for(ColumnContract column : tableContract.getColumns()){
+        for (ColumnContract column : tableContract.getColumns()) {
             values.put(column.getColumnName(), urls.get(i).toString());
             i++;
         }
 
-        long newRowId = db.insert(tableContract.getTableName(),null, values);
+        long newRowId = db.insert(tableContract.getTableName(), null, values);
 
         dbHelper.close();
     }
 
-    public List<List<Object>> ReadAllObj(TableContract tableContract){
+    public List<List<Object>> ReadAllObj(TableContract tableContract) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Define a projection that specifies which columns from the database
         // you will actually use after this query.
         List<String> proj = new ArrayList<>();
-        for(ColumnContract column : tableContract.getColumns())
-        {
+        for (ColumnContract column : tableContract.getColumns()) {
             proj.add(column.getColumnName());
         }
         String[] projection = new String[proj.size()];
@@ -75,12 +76,11 @@ public class AndroidDAO {
         );
 
         List<List<Object>> rows = new ArrayList<>();
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             List<Object> items = new ArrayList<>();
-            for(ColumnContract column : tableContract.getColumns())
-            {
+            for (ColumnContract column : tableContract.getColumns()) {
                 int idx = cursor.getColumnIndexOrThrow(column.getColumnName());
-                switch (column.getType()){
+                switch (column.getType()) {
                     default:
                         String itemString = cursor.getString(idx);
                         items.add(itemString);

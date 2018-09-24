@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,6 @@ import java.util.List;
 import de.phifo.android.persistance.AndroidDAO;
 import de.phifo.csvtracker.CsvTrackerMain;
 import de.phifo.csvtracker.persistance.CsvTrackerDatabase;
-import de.phifo.csvtracker.widget.IWidget;
-import de.phifo.persistance.ColumnContract;
 import de.phifo.persistance.TableContract;
 
 public class ListenFragment extends ListFragment {
@@ -31,34 +29,30 @@ public class ListenFragment extends ListFragment {
 
     ArrayList<Object> values;
 
-    public ListenFragment()
-    {
-          values = new ArrayList<>();
+    private AndroidDAO dao;
 
+    private Object selectedObject;
+
+    public ListenFragment() {
+        values = new ArrayList<>();
     }
 
-    public void add(Object s)
-    {
-        if(adapter!=null){
-
-
-        adapter.add(s.toString());
-    }
-    else{
+    public void add(Object s) {
+        if (adapter != null) {
+            adapter.add(s.toString());
+        } else {
             values.add(s);
         }
     }
 
-    public void update(){
-           AndroidDAO dao = new AndroidDAO(database);
+    public void update() {
+         dao = new AndroidDAO(database);
 
-           List<List<Object>> list = dao.ReadAllObj(tableContract);
+        List<List<Object>> list = dao.ReadAllObj(tableContract);
 
-           for(List<Object> row : list)
-           {
-                add( row.toString() );
-           }
-
+        for (List<Object> row : list) {
+            add(row.toString());
+        }
     }
 
     @Override
@@ -84,16 +78,32 @@ public class ListenFragment extends ListFragment {
         txt.setText("Sync");
 
         Button txt2 = new Button(getActivity());
-        txt.setText("Delete");
+        txt2.setText("Delete");
+        txt2.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (selectedObject != null) {
+                            values.remove(selectedObject);
+                            dao.remove(selectedObject);
+                            adapter.remove(selectedObject);
+                        }else{
+
+                        Toast.makeText(getActivity(),
+                                "nothing selected", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
 
         Button txt3 = new Button(getActivity());
-        txt.setText("Edit");
+        txt3.setText("Edit");
 
         view.addView(txt);
         view.addView(txt2);
         view.addView(txt3);
 
-        view.addView( super.onCreateView(inflater, container, savedInstanceState));
+        view.addView(super.onCreateView(inflater, container, savedInstanceState));
 
         return view;
 
@@ -111,6 +121,8 @@ public class ListenFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // TODO implement some logic
+
+        selectedObject = adapter.getItem(position);
+
     }
 }
