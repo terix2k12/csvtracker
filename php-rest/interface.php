@@ -1,7 +1,3 @@
-<html>
-	<head>
-	</head>
-<body>
 <?php
 	// If activated gives syntax errors :)
 	// ini_set('display_errors', 1);
@@ -14,32 +10,33 @@
     // curl -i -X POST -d "usr=Globuli&pwd=partyhard&action=get&dd=5&mm=8&yy=2018"
     // http://limestone.ming.selfhost.de/csh/interface.php
 
+	include("dbcredentials.php");
+
 	// Authorization
 	$usr = $_POST["usr"];
 	$pwd = $_POST["pwd"];
 
 	if ($usr!=$apiUser or $pwd!=$apiPassword)
 	{
-	    echo "<h1>403 Forbidden</h1>\n</body>\n</html>\n";
+	    echo "<html><body><h1>403 Forbidden</h1></body></html>";
 	    header("HTTP/1.0 403 Forbidden");
 	    return;
 	}
 
-	include("dbcredentials.php");
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	
+	$conn = mysqli_connect($dbServername, $dbUsername, $dbPassword, $dbName);
 	if (!$conn)
 	{
-	    echo "<h1>503 Service Unavailable</h1>\n</body>\n</html>\n";
+	    echo "<html><body><h1>503 Service Unavailable</h1></body></html>";
 	    header("HTTP/1.0 503 Service Unavailable");
 	    return;
 	}
 
 	// Evaluate Action
 	$action = $_POST["action"];
-
 	if ($action != 'get' && $action != 'put')
 	{
-	    echo "<h1>503 Service Unavailable</h1>\n</body>\n</html>\n";
+	    echo "<html><body><h1>503 Service Unavailable</h1></body></html>";
 	    header("HTTP/1.0 503 Service Unavailable");
 	    return;
 	}
@@ -101,7 +98,7 @@
 		$sub = $_POST["sub"];
 		$dsc = $_POST["cmt"];
 		
-		echo $dat." ".$kto." ".$sko." ".$cur." ".$val." ".$cat." ".$sub." ".$dsc."<br>\n";
+		// echo $dat." ".$kto." ".$sko." ".$cur." ".$val." ".$cat." ".$sub." ".$dsc."<br>\n";
 
 	$sql  = "INSERT INTO DATEN3 (DatumDD,DatumMM,DatumYYYY,Datum,Konto,Skonto,Waehrung,Betrag,Kategorie,Unterkategorie,Kommentar)" 
 	       ."VALUE ('".$dd."', '".$mm."', '".$yy."', '".$dat."', '".$kto."', '".$sko."', '".$cur."', '".$val."', '".$cat."', '".$sub."', '".$dsc."');";
@@ -109,10 +106,11 @@
 		$response = mysqli_query($conn, $sql);
 		 	     
 		if ($response === TRUE) {
-		    echo "Data processed.\n";
+		    // echo "Data processed.\n";
+		    echo "id:".mysqli_insert_id($conn).">";
 		    header("HTTP/1.0 200 OK");
 		} else {
-		    echo "<h1>500 Internal Server Error</h1>\n";
+		    echo "<html><body><h1>500 Internal Server Error</h1>";
 		    //echo mysqli_error($conn);
 		    header("HTTP/1.0 500 Internal Server Error");  
 		}
@@ -121,5 +119,3 @@
 	}
 
 ?>
-</body>
-</html>
