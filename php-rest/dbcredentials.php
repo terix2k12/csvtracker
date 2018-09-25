@@ -1,11 +1,11 @@
 <?php
 	// App credentials
-	$apiPassword = "susi";
-	$apiUser = "Vollidiot";
+	$apiPassword = "";
+	$apiUser = "";
 
 	// Database Connection
-	$dbServername = "localhost";
-	$dbUsername = "GrAxx3";
-	$dbPassword = "F.bg3DoSzs";
-	$dbName = "phifon";
+	$dbServername = "";
+	$dbUsername = "";
+	$dbPassword = "";
+	$dbName = "";
 ?>
