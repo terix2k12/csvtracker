@@ -99,7 +99,7 @@ public class CsvTrackerMain {
     public void AddItem(TableContract con, List<Object> s) {
         AddToDatabase(con, s);
         AddToListe(con, s);
-        // AddToServer(con, s);
+        AddToServer(con, s);
     }
 
     public void AddToServer(TableContract con, List<Object> s) {
@@ -108,6 +108,13 @@ public class CsvTrackerMain {
 
         try {
             activity.toast(t.get());
+
+            long dbId = Long.parseLong( t.get().substring(3,5) );
+            // TODO achtung nur bis 99
+            long localId = (long) s.get(0);
+
+            UpdateId(con, localId, dbId);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
             activity.handleException(e);
@@ -128,6 +135,10 @@ public class CsvTrackerMain {
         } catch (Exception e) {
             activity.handleException(e);
         }
+    }
+
+    private void UpdateId(TableContract con, long localId, long dbId) {
+        database.update(con, con.getColumns().get(0), localId, dbId);
     }
 
     public List<List<Object>> ReadAllObj(TableContract con){

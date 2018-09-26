@@ -19,6 +19,19 @@ public class AndroidDAO {
         dbHelper = database;
     }
 
+    public void update(TableContract con, ColumnContract col, long id, Object newValue) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(col.getColumnName(), newValue.toString());
+
+        String whereClause = "_ID = ?";
+        String[] whereArgs = {"" + id};
+
+        db.update(con.getTableName(), values, whereClause, whereArgs);
+
+        db.close();
+    }
 
     public void insert(TableContract tableContract, List<Object> newItem) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -34,7 +47,7 @@ public class AndroidDAO {
             // TODO must handle nullables
 
             if (i > 1) { // skip sync and id
-                Object v = newItem.get(i-2);
+                Object v = newItem.get(i - 2);
                 values.put(column.getColumnName(), v.toString());
             }
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.phifo.android.persistance.AndroidDAO;
 import de.phifo.android.persistance.AndroidDatabase;
+import de.phifo.persistance.ColumnContract;
 import de.phifo.persistance.TableContract;
 
 public class CsvTrackerDatabase extends AndroidDatabase {
@@ -51,6 +52,10 @@ public class CsvTrackerDatabase extends AndroidDatabase {
         }*/
 
         // database = new AndroidDAO(eingabeFelder);
+    }
+
+    public void update(TableContract con, ColumnContract col, long id, Object newValue) {
+        dao.update(con, col, id , newValue);
     }
 
     public void insert(TableContract con, List<Object> cnt) {
