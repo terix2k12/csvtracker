@@ -139,6 +139,7 @@ public class CsvTrackerMain {
 
     private void UpdateId(TableContract con, long localId, long dbId) {
         database.update(con, con.getColumns().get(0), localId, dbId);
+        database.update(con, con.getColumns().get(1), dbId, true);
     }
 
     public List<List<Object>> ReadAllObj(TableContract con){
