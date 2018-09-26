@@ -4,10 +4,8 @@ public class ColumnContract {
     private String columnName;
     private ColumnType columnType;
 
-   private int properties;
-
-   /*
-    private String title; */
+    private int properties;
+    public boolean keyProperty;
 
     public ColumnContract(String columnName, ColumnType columnType, int properties) {
         this.columnName = columnName;
@@ -27,14 +25,6 @@ public class ColumnContract {
         return properties;
     }
 
-    /*
-    public void setWert(String wert) {
-        this.wert = wert;
-    }
+    public boolean isKey() { return keyProperty; }
 
-
-
-    public void setBezeichner(String bezeichner) {
-        this.bezeichner = bezeichner;
-    }*/
 }

@@ -5,10 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
-import de.phifo.csvtracker.fragments.WidgetFragment;
 import de.phifo.csvtracker.fragments.ListenFragment;
 import de.phifo.csvtracker.fragments.PageFragment;
-import de.phifo.csvtracker.persistance.CsvTrackerDatabase;
+import de.phifo.csvtracker.fragments.WidgetFragment;
 import de.phifo.persistance.TableContract;
 
 public class TabsPagerAdapter extends FragmentStatePagerAdapter {
@@ -18,25 +17,23 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
     private ListenFragment list;
     private WidgetFragment eingabeFrag;
 
-    private CsvTrackerDatabase database;
+    // private CsvTrackerDatabase database;
     private TableContract tableContract;
 
     private CsvTrackerMain main;
 
-    public TabsPagerAdapter(FragmentManager fm, CsvTrackerDatabase dao,
+    public TabsPagerAdapter(FragmentManager fm,
                             TableContract tableContract,
                             CsvTrackerMain main) {
         super(fm);
         this.main = main;
         this.tableContract = tableContract;
-        this.database = dao;
 
         eingabeFrag = new WidgetFragment();
         eingabeFrag.contract = tableContract;
         eingabeFrag.main = main;
 
-        list=    new ListenFragment();
-        list.database = database;
+        list = new ListenFragment();
         list.tableContract = tableContract;
         list.main = main;
     }
@@ -44,21 +41,20 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Object obj = super.instantiateItem(container, position);
-         return obj;
+        return obj;
     }
 
     @Override
     public int getItemPosition(Object object) {
-       // if(update){
-       //     return POSITION_NONE;
-       // }else
+        // if(update){
+        //     return POSITION_NONE;
+        // }else
         return super.getItemPosition(object);
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch(position)
-        {
+        switch (position) {
             case 0:
                 return eingabeFrag;
             case 1:
@@ -69,8 +65,7 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 
     }
 
-    public ListenFragment getListe()
-    {
+    public ListenFragment getListe() {
         return list;
     }
 
@@ -81,7 +76,7 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch(position) {
+        switch (position) {
             case 0:
                 return "Eingeben";
             case 1:

@@ -2,10 +2,10 @@ package de.phifo.persistance;
 
 public enum ColumnType {
     DATE("DATE"),
-    NUMBER("NUMBER"),
+    INTEGER("INTEGER"),
     TEXT("TEXT"),
-    SELECTION("NUMBER"),
-    SWITCH("BOOL"),
+    SELECTION("INTEGER"),
+    BOOL("BOOL"),
 ;
 
      ColumnType(String sql)

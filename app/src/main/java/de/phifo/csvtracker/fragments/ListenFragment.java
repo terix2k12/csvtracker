@@ -21,37 +21,32 @@ import de.phifo.persistance.TableContract;
 
 public class ListenFragment extends ListFragment {
 
-    public CsvTrackerDatabase database;
+    public CsvTrackerMain main;
     public TableContract tableContract;
 
-    private ArrayAdapter<Object> adapter;
-    public CsvTrackerMain main;
+    private ArrayAdapter<List<Object>> adapter;
 
-    ArrayList<Object> values;
+    ArrayList<List<Object>> values;
 
-    private AndroidDAO dao;
-
-    private Object selectedObject;
+    private List<Object> selectedObject;
 
     public ListenFragment() {
         values = new ArrayList<>();
     }
 
-    public void add(Object s) {
+    public void add(List<Object> s) {
         if (adapter != null) {
-            adapter.add(s.toString());
+            adapter.add(s);
         } else {
             values.add(s);
         }
     }
 
     public void update() {
-         dao = new AndroidDAO(database);
-
-        List<List<Object>> list = dao.ReadAllObj(tableContract);
+        List<List<Object>> list = main.ReadAllObj(tableContract);
 
         for (List<Object> row : list) {
-            add(row.toString());
+            add(row);
         }
     }
 
@@ -59,7 +54,7 @@ public class ListenFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        adapter = new ArrayAdapter<Object>(getActivity(),
+        adapter = new ArrayAdapter<List<Object>>(getActivity(),
                 android.R.layout.simple_list_item_1, values);
 
         setListAdapter(adapter);
@@ -109,7 +104,8 @@ public class ListenFragment extends ListFragment {
                     public void onClick(View v) {
                         if (selectedObject != null) {
                             values.remove(selectedObject);
-                            dao.remove(selectedObject);
+                            long id = Long.parseLong((String)selectedObject.get(0));
+                            main.delete(tableContract, id);
                             adapter.remove(selectedObject);
                         }else{
                         Toast.makeText(getActivity(),

@@ -6,23 +6,19 @@ import java.util.List;
 
 import de.phifo.android.persistance.AndroidDAO;
 import de.phifo.android.persistance.AndroidDatabase;
-import de.phifo.csvtracker.model.AusgabenBE;
-import de.phifo.persistance.ColumnContract;
-import de.phifo.persistance.ColumnType;
 import de.phifo.persistance.TableContract;
 
 public class CsvTrackerDatabase extends AndroidDatabase {
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "FeedReader.db";
 
-    private AndroidDAO dao;
+    public AndroidDAO dao;
 
-    public CsvTrackerDatabase(Context context)
-    {
+    public CsvTrackerDatabase(Context context) {
         super(context, DATABASE_NAME, DATABASE_VERSION);
 
-        dao = new AndroidDAO( this  );
+        dao = new AndroidDAO(this);
         /*
         MetaTableContract contract = new MetaTableContract();
         createTableIfNotExists(contract);
@@ -57,8 +53,11 @@ public class CsvTrackerDatabase extends AndroidDatabase {
         // database = new AndroidDAO(eingabeFelder);
     }
 
-    public void Write(TableContract con, List<Object> cnt)
-    {
-        dao.Write(con, cnt);
+    public void insert(TableContract con, List<Object> cnt) {
+        dao.insert(con, cnt);
+    }
+
+    public void delete(TableContract con, long id) {
+        dao.delete(con, id);
     }
 }

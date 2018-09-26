@@ -19,31 +19,35 @@ public class AndroidDAO {
         dbHelper = database;
     }
 
-    public void DeleteAll(TableContract tableContract) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        db.execSQL("DELETE FROM " + tableContract.getTableName() + ";");
-        dbHelper.close();
-    }
 
-    public void remove(Object obj) {
-
-    }
-
-    public void Write(TableContract tableContract, List<Object> urls) {
+    public void insert(TableContract tableContract, List<Object> newItem) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
+
+        // _ID is added automatically
+        values.put("_SYNC", false);
 
         int i = 0;
         for (ColumnContract column : tableContract.getColumns()) {
-            values.put(column.getColumnName(), urls.get(i).toString());
+            // TODO toString method here must be replaced with a more generic interface
+            // TODO must handle nullables
+
+            if (i > 1) { // skip sync and id
+                Object v = newItem.get(i-2);
+                values.put(column.getColumnName(), v.toString());
+            }
+
             i++;
         }
 
         long newRowId = db.insert(tableContract.getTableName(), null, values);
 
         dbHelper.close();
+
+        // Add "synced" and "id" elements
+        newItem.add(0, false);
+        newItem.add(0, newRowId);
     }
 
     public List<List<Object>> ReadAllObj(TableContract tableContract) {
@@ -66,13 +70,13 @@ public class AndroidDAO {
         String sortOrder = tableContract.getColumns().get(0).getColumnName() + " DESC";
 
         Cursor cursor = db.query(
-                tableContract.getTableName(),                     // The table to query
-                projection,                               // The columns to return
-                null,                                // The columns for the WHERE clause
-                null,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                sortOrder                                 // The sort order
+                tableContract.getTableName(),  // The table to query
+                projection,                    // The columns to return
+                null,                  // The columns for the WHERE clause
+                null,               // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                    // don't filter by row groups
+                sortOrder                       // The sort order
         );
 
         List<List<Object>> rows = new ArrayList<>();
@@ -97,13 +101,21 @@ public class AndroidDAO {
         return rows;
     }
 
-    /*public void Delete(SQLiteDatabase db) throws Exception {
-        throw new Exception("not implemented");
-        // Define 'where' part of query.
-        // String selection =  "COLUMN_NAME_TITLE LIKE ?";
-        // Specify arguments in placeholder order.
-        // String[] selectionArgs = { "MyTitle" };
-        // Issue SQL statement.
-        // db.delete("TABLE_NAME", selection, selectionArgs);
-    }*/
+    public void deleteAll(TableContract tableContract) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM " + tableContract.getTableName() + ";");
+        dbHelper.close();
+    }
+
+    public void delete(TableContract tableContract, long id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        String whereClause = "_ID = ?";
+        String[] whereArgs = {"" + id};
+
+        db.delete(tableContract.getTableName(), whereClause, whereArgs);
+
+        db.close();
+    }
+
 }

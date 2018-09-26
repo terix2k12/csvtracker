@@ -33,6 +33,9 @@ public class CsvTrackerMain {
         activity.navi.LinkNavigation(defaultC, false);
         activity.GetTabsAdapter(defaultC);
 
+        database.createTableIfNotExists(contract);
+        database.createTableIfNotExists(defaultC);
+
         String curName = null;
         String name = null;
         List<ColumnContract> columns = new ArrayList<>();
@@ -66,12 +69,11 @@ public class CsvTrackerMain {
 
     private TableContract Default() {
         return new TableContract("AUSGABEN",
-                // TODO id column determined by database
                 new ColumnContract("Datum", ColumnType.DATE, 0),
                 new ColumnContract("Konto", ColumnType.SELECTION, R.array.kto_array),
                 new ColumnContract("Skonto", ColumnType.SELECTION, R.array.skto_array),
                 new ColumnContract("Währung", ColumnType.SELECTION, R.array.cur_array),
-                new ColumnContract("Betrag", ColumnType.NUMBER, 0),
+                new ColumnContract("Betrag", ColumnType.INTEGER, 0),
                 new ColumnContract("Kategorie", ColumnType.SELECTION, R.array.kat_array),
                 new ColumnContract("Unterkategorie", ColumnType.SELECTION, R.array.sub_array),
                 new ColumnContract("Kommentar", ColumnType.TEXT, 0)
@@ -84,7 +86,7 @@ public class CsvTrackerMain {
             contract = meta;
 
             TabsPagerAdapter ada = activity.GetTabsAdapter(contract);
-            ada.getListe().add(contract);
+            // ada.getListe().add(contract);
         } else {
             ColumnContract[] array = new ColumnContract[columns.size()];
             columns.toArray(array);
@@ -95,9 +97,9 @@ public class CsvTrackerMain {
     }
 
     public void AddItem(TableContract con, List<Object> s) {
-        AddToServer(con, s);
-        AddToListe(con, s);
         AddToDatabase(con, s);
+        AddToListe(con, s);
+        // AddToServer(con, s);
     }
 
     public void AddToServer(TableContract con, List<Object> s) {
@@ -122,9 +124,18 @@ public class CsvTrackerMain {
 
     private void AddToDatabase(TableContract con, List<Object> s) {
         try {
-            database.Write(con, s);
+            database.insert(con, s);
         } catch (Exception e) {
             activity.handleException(e);
         }
     }
+
+    public List<List<Object>> ReadAllObj(TableContract con){
+        return database.dao.ReadAllObj(con);
+    }
+
+    public void delete(TableContract con, long id){
+        database.delete(con, id);
+    }
+
 }

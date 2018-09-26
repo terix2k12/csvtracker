@@ -28,8 +28,8 @@ public class CsvTrackerActivity extends AppCompatActivity {
     // http://saulmm.github.io/mastering-coordinator
     NavigationControl navi;
     CsvTrackerMain main;
+
     private Map<String, TabsPagerAdapter> map = new HashMap<>();
-    private CsvTrackerDatabase database;
 
     @Override
     protected void onStart() {
@@ -47,7 +47,7 @@ public class CsvTrackerActivity extends AppCompatActivity {
 
         createContentView();
 
-        database = new CsvTrackerDatabase(this);
+        CsvTrackerDatabase database = new CsvTrackerDatabase(this);
         main = new CsvTrackerMain(database, this);
 
         main.InitWithMetaitems();
@@ -102,7 +102,7 @@ public class CsvTrackerActivity extends AppCompatActivity {
     public TabsPagerAdapter CreateTabsAdapter(TableContract c) {
         TabsPagerAdapter tabsAdaptert;
 
-        tabsAdaptert = new TabsPagerAdapter(getSupportFragmentManager(), database, c, main);
+        tabsAdaptert = new TabsPagerAdapter(getSupportFragmentManager(), c, main);
 
         final WidgetFragment eingabe = (WidgetFragment) tabsAdaptert.getItem(0);
         eingabe.main = main;

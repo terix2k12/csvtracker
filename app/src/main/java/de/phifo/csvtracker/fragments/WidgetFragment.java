@@ -62,11 +62,15 @@ public class WidgetFragment extends Fragment {
                 case TEXT:
                     createText(col, ll);
                     break;
-                case NUMBER:
-                    createText(col, ll);
+                case INTEGER:
+                    if(!col.isKey())
+                    {
+                        createText(col, ll);
+                    }
+
                     break;
                 default:
-
+                    // TODO if BOOL dont add sync
             }
         }
 
@@ -77,6 +81,7 @@ public class WidgetFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 List<Object> werte = new ArrayList<>();
+
                 for (ColumnContract col : contract.getColumns()) {
                     IWidget widget = inputs.get(col.getColumnName());
                     if (widget != null) {
