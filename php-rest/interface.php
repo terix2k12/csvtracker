@@ -107,7 +107,7 @@
 		 	     
 		if ($response === TRUE) {
 		    // echo "Data processed.\n";
-		    echo "id:".mysqli_insert_id($conn).">";
+		    echo "id:<".mysqli_insert_id($conn).">";
 		    header("HTTP/1.0 200 OK");
 		} else {
 		    echo "<html><body><h1>500 Internal Server Error</h1>";
